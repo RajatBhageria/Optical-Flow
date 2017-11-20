@@ -43,7 +43,7 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   windowMaxY = startY + 5 if startY + 5 < h else h - startY
   
   # Get window points from Ix, Iy, and It
-  Ix_window = Ix[windowMinY: windowMaxY, windowMinX: windowMaxX + 1]
+  Ix_window = Ix[windowMinY: windowMaxY, windowMinX: windowMaxX]
   Iy_window = Iy[windowMinY: windowMaxY, windowMinX: windowMaxX]
   It_window = It[windowMinY: windowMaxY, windowMinX: windowMaxX]
   
