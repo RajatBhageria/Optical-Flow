@@ -17,6 +17,7 @@ import detectFace
 def faceTracking(rawVideo):
     
     #process the video here, convert into frames of images
+    #assuming that 'rawVideo' is a video path
     cap = cv2.VideoCapture(rawVideo)
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
