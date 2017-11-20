@@ -6,6 +6,7 @@
 import numpy as np
 import cv2
 import detectFace
+import getFeatures
 
 '''
   File clarification:
@@ -42,12 +43,23 @@ def faceTracking(rawVideo):
     #if "good" face not found, then try other frames, until a good face is found
     face_found = False
     f = 0
+    face = None
     while ~face_found:
         face = detectFace(frames[f,:,:,:]);
         f+=1
         if face :
             face_found = True
-            
-    #step 2 and 3 TODO:
+            f-=1
+
+    init_frame = f
+    init_img = frames[init_frame,:,:,:]
+    init_img_gray = cv2.cvtColor(init_img, cv2.COLOR_BGR2GRAY)
+
+    x, y = getFeatures(init_img_gray, face)
+
+
+    #cv2.rectangle can be used to draw rectangles if needed
+
+    #step 3 TODO:
     
     return trackedVideo

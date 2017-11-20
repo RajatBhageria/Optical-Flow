@@ -14,36 +14,39 @@ import cv2
 '''
 
 def detectFace(img):
-  #TODO: Your code here
-  img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-  faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
-  
-  #returns (x, y, w, h) for each face in the pic
-  faces = faceCascade.detectMultiScale(img_gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30),
+    #TODO: Your code here
+    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
+
+    #returns (x, y, w, h) for each face in the pic
+    faces = faceCascade.detectMultiScale(img_gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30),
                                        flags = cv2.CASCADE_SCALE_IMAGE)
 
-  #if we want to visualize the faces
-  #for (x, y, w, h) in faces:
-  #    cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-  #cv2.imshow('image', img)
-  #cv2.waitKey(0)
+    #if we want to visualize the faces
+    #for (x, y, w, h) in faces:
+    #    cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+    #cv2.imshow('image', img)
+    #cv2.waitKey(0)
 
-  #parse this output into the F x 4 x 2 matrix that we want
-  bbox = np.zeros([np.size(faces,0),4,2])
-  f = 0
-  for (x, y, w, h) in faces:
-      bbox[f, 0, 0] = x
-      bbox[f, 0, 1] = y
-      
-      bbox[f, 1, 0] = x + w
-      bbox[f, 1, 1] = y
-      
-      bbox[f, 2, 0] = x
-      bbox[f, 2, 1] = y + h
-      
-      bbox[f, 3, 0] = x + w
-      bbox[f, 3, 1] = y + h
-      
-      f+=1
-      
-  return bbox
+    #parse this output into the F x 4 x 2 matrix that we want
+    bbox = np.zeros([np.size(faces,0),4,2], np.int)
+    f = 0
+    for (x, y, w, h) in faces:
+        bbox[f, 0, 0] = x
+        bbox[f, 0, 1] = y
+
+        bbox[f, 1, 0] = x + w
+        bbox[f, 1, 1] = y
+
+        bbox[f, 2, 0] = x
+        bbox[f, 2, 1] = y + h
+
+        bbox[f, 3, 0] = x + w
+        bbox[f, 3, 1] = y + h
+
+        f+=1
+
+    if bbox == np.zeros([np.size(faces,0),4,2]) :
+        return None
+    else :
+        return bbox
