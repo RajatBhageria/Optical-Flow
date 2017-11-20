@@ -19,6 +19,7 @@ def faceTracking(rawVideo):
     #process the video here, convert into frames of images
     #assuming that 'rawVideo' is a video path
     cap = cv2.VideoCapture(rawVideo)
+    #ie, test with rawVideo = 'Data/Easy/TheMartian.mp4'
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
     num_frames = int(cap.get(7))

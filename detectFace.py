@@ -20,8 +20,14 @@ def detectFace(img):
   
   #returns (x, y, w, h) for each face in the pic
   faces = faceCascade.detectMultiScale(img_gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30),
-                                       flags = cv2.cv.CV_HAAR_SCALE_IMAGE)
-  
+                                       flags = cv2.CASCADE_SCALE_IMAGE)
+
+  #if we want to visualize the faces
+  #for (x, y, w, h) in faces:
+  #    cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+  #cv2.imshow('image', img)
+  #cv2.waitKey(0)
+
   #parse this output into the F x 4 x 2 matrix that we want
   bbox = np.zeros([np.size(faces,0),4,2])
   f = 0
