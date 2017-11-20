@@ -57,6 +57,8 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   
   #Solve for newX and newY
   LHS_inverse = np.linalg.inv(LHS_summation)
-  newX, newY = LHS_inverse.dot(RHS_summation).T[0]
+  u, v = LHS_inverse.dot(RHS_summation).T[0]
+  newX = startX + u
+  newY = startY + v
   
   return newX, newY
