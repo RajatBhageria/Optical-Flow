@@ -4,7 +4,7 @@
   Date created: 11/20/17
 '''
 import numpy as np
-import skimage
+from skimage import feature
 '''
   File clarification:
     Detect features within each detected bounding box
@@ -27,7 +27,7 @@ def getFeatures(img, bbox):
         boxed_img[y1:y2+1, x1:x2+1] = img[y1:y2+1, x1:x2+1]
 
     #now we do corner detection
-    features_array = skimage.feature.corner_shi_tomasi(boxed_img, sigma=1).astype(int)
+    features_array = feature.corner_shi_tomasi(boxed_img, sigma=1).astype(int)
 
     #suppress everything except for the top 1000 points
     features_sorted = np.sort(features_array, axis=None)
