@@ -1,6 +1,10 @@
+import estimateFeatureTranslation
+import numpy as np
+from helper import rgb2gray
+
 '''
   File name: estimateAllTranslation.py
-  Author:
+  Author: Rajat Bhageria, Kashish Gupta, Rajiv O'Conner-Patel
   Date created:
 '''
 
@@ -16,5 +20,32 @@
 '''
 
 def estimateAllTranslation(startXs, startYs, img1, img2):
-  #TODO: Your code here
-  return newXs, newYs
+
+  #Convert from RGB to grayscale
+  grey1 = rgb2gray(img1)
+  grey2 = rgb2gray(img2)
+
+  #find the number of total features
+  [numFeatures, _] = startXs
+
+  #instantiate the output
+  newXs = np.zeros(numFeatures,1)
+  newYs = np.zeros(numFeatures,1)
+
+  #Get the gradients of the first image
+  [Ix, Iy] = np.gradient(grey1)
+
+  #Loop through all the features
+  for feature in range(0,numFeatures):
+      #get the current feature
+      startX = startXs[feature];
+      startY = startYs[feature];
+
+      # Estimate the translation for the current feature
+      [newX, newY]=estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2)
+
+      #append the newX and newY for the current feature to the list of new featuers
+      newXs[feature] = newX
+      newYs[feature] = newY
+
+  return [newXs, newYs]
