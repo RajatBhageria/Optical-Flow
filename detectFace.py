@@ -1,8 +1,9 @@
 '''
   File name: detectFace.py
-  Author:
-  Date created:
+  Author: Kashish Gupta, Rajat Bhageria, Rajiv Patel-Oconnor
+  Date created: 11/19/17
 '''
+import cv2
 
 '''
   File clarification:
