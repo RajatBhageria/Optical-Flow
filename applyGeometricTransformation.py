@@ -33,7 +33,8 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
   #loop over the number of faces
   for face in range(0,numFaces):
     #find the distances between the points
-    distances = np.linalg.norm((startXs[:,face] - newXs[:,face]) + (startYs[:,face] - newYs[:,face]))
+    #distances = np.linalg.norm((startXs[:,face] - newXs[:,face]) + (startYs[:,face] - newYs[:,face]))
+    distances = ((startXs[:,face] - newXs[:,face])**2 + (startYs[:,face] - newYs[:,face])**2)**.5
 
     #set the maxDistance beyond which a feature is an outlier
     maxDistance = 4
@@ -48,8 +49,10 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
     currentBbox = bbox[face, :, :]
 
     #find the similarity transform
-    transform = SimilarityTransform.__init__()
-    transformationWorked = transform.estimate([startXsWithoutOutliers,startYsWithoutOutliers],[newXsWithoutOutliers,newYsWithoutOutliers])
+    transform = SimilarityTransform()
+    src = np.concatenate((startXsWithoutOutliers,startYsWithoutOutliers),axis=1)
+    dest = np.concatenate((newXsWithoutOutliers,newYsWithoutOutliers),axis=1)
+    transformationWorked = transform.estimate(src,dest)
 
     #if the transformation was successful
     if (transformationWorked):
@@ -63,7 +66,7 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
     newbbox[face,:,:] = currentNewBbox
 
     #add the new Xs and Ys to final Xs and Ys
-    Xs[:,face] = newXsWithoutOutliers
-    Ys[:,face] = newYsWithoutOutliers
+    Xs.append(newXsWithoutOutliers)
+    Ys.append(newYsWithoutOutliers)
 
   return Xs, Ys, newbbox
