@@ -21,7 +21,7 @@ def getFeatures(img, bbox):
     r,c = img.shape
     boxed_img = np.zeros(img.shape, np.uint8)
     [numFaces, numCorners, coords] = bbox.shape
-    xOutput = yOutput = np.zeros((250, numFaces))
+    xOutput = yOutput = np.zeros((250, numFaces), dtype=np.int_)
     count = 0
     for arr in bbox :
         x1 = arr[0,0]

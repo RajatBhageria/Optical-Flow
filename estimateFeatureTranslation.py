@@ -29,7 +29,7 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   gray2 = rgb2gray(img2)
   
   # Get size of image and allocate space for matrices in "culmination"
-  [h, w] = gray1
+  [h, w] = gray1.shape
   LHS_summation = np.zeros((2,2)) #make this an np.empty after shown to work
   RHS_summation = np.zeros((2, 1))
   
