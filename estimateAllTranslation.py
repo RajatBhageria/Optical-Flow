@@ -28,8 +28,8 @@ def estimateAllTranslation(startXs, startYs, img1, img2):
   [numFeatures, numFaces] = startXs
 
   #instantiate the output
-  newXs = np.zeros(numFeatures,numFaces)
-  newYs = np.zeros(numFeatures,numFaces)
+  newXs = np.zeros((numFeatures,numFaces))
+  newYs = np.zeros((numFeatures,numFaces))
 
   #Get the gradients of the first image
   [Ix, Iy] = np.gradient(grey1)
