@@ -23,12 +23,12 @@ from skimage.transform import matrix_transform
 
 def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
   #find the number of faces and number of features on each face
-  [_, numFaces] = startXs
+  [numFeatures, numFaces] = startXs.shape
 
   #instantiate the outputs
   Xs = []
   Ys = []
-  newbbox = np.zeros(numFaces,4,2)
+  newbbox = np.zeros((numFaces,4,2))
 
   #loop over the number of faces
   for face in range(0,numFaces):
