@@ -8,6 +8,7 @@ import cv2
 import detectFace
 import getFeatures
 import estimateAllTranslation
+import applyGeometricTransformation
 
 '''
   File clarification:
@@ -46,22 +47,53 @@ def faceTracking(rawVideo):
     f = 0
     face = None
     while ~face_found:
+        #face is a Fx4x2 bounding box
         face = detectFace(frames[f,:,:,:]);
         f+=1
         if face :
             face_found = True
             f-=1
 
+    #find the start features
     init_frame = f
     init_img = frames[init_frame,:,:,:]
     init_img_gray = cv2.cvtColor(init_img, cv2.COLOR_BGR2GRAY)
+    startXs, startYs = getFeatures(init_img_gray, face)
 
-    x, y = getFeatures(init_img_gray, face)
-
+    ### STILL LOT TO DO FROM HERE ON!
 
     #cv2.rectangle can be used to draw rectangles if needed
 
-    #step 3 TODO:
-    #[newXs, newYs] = estimateAllTranslation(x, y, img1, img2)
-    #[Xs, Ys, newbbox] = applyGeometricTransformation(x, y, newXs, newYs, bbox)
+    #initialize the the output matrix of tracked images
+    outputMatrix = np.zeros(num_frames-f,frame_width,frame_height)
+
+    #draw rectangles of all the faces on the current image
+    initImgWithBBox = init_img
+    [numFaces,_,_] = face
+    for face in range(0,numFaces):
+        bboxOfCurrFace = face[face,:,:]
+        initImgWithBBox = cv2.rect(initImgWithBBox,bboxOfCurrFace[0,:],bboxOfCurrFace[3,:])
+
+    #add the initial image as the first image
+    outputMatrix[0,:,:,:] = initImgWithBBox
+
+    #actually do the transform and find the new bounding box
+    for frame in range(f,num_frames-1):
+        img1 = frames[frame,:,:,:]
+        img2 = frames[frame+1,:,:,:]
+
+        [newXs, newYs] = estimateAllTranslation(startXs, startYs, img1, img2)
+        [Xs, Ys, newbbox] = applyGeometricTransformation(startXs, startYs, newXs, newYs, face)
+
+        #now add a rectangle of newbbox to img2
+        img2WithBoundingBox = img2
+        for face in range(0, numFaces):
+            bboxOfCurrFace = newbbox[face, :, :]
+            img2WithBoundingBox = cv2.rect(img2WithBoundingBox, bboxOfCurrFace[0, :], bboxOfCurrFace[3, :])
+
+        #add img2 to the output matrix
+        outputMatrix[frame,:,:,:] = img2WithBoundingBox
+
+    #convert outputMatrix to a video and return as trackedVideo
+
     return trackedVideo
