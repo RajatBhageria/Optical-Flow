@@ -25,11 +25,11 @@ def estimateAllTranslation(startXs, startYs, img1, img2):
   grey1 = rgb2gray(img1)
 
   #find the number of total features
-  [numFeatures, numFaces] = startXs
+  [numFeatures, numFaces] = startXs.shape
 
   #instantiate the output
-  newXs = np.zeros(numFeatures,numFaces)
-  newYs = np.zeros(numFeatures,numFaces)
+  newXs = np.zeros((numFeatures,numFaces))
+  newYs = np.zeros((numFeatures,numFaces))
 
   #Get the gradients of the first image
   [Ix, Iy] = np.gradient(grey1)

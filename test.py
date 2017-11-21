@@ -12,18 +12,29 @@ from estimateAllTranslation import estimateAllTranslation
 from applyGeometricTransformation import applyGeometricTransformation
 from helper import rgb2gray, overlay_points
 import matplotlib.pyplot as plt
+import cv2
 
+#create all the images
 color_img1 = plt.imread('./data/easy/TheMartian1.jpg')
 img1 = rgb2gray(color_img1)
 
 color_img2 = plt.imread('./data/easy/TheMartian2.jpg')
 img2 = rgb2gray(color_img2)
 
+#find the bounding boxes
 bbox = detectFace(color_img1)
 
+#find the positions of all the features
 startXs, startYs = getFeatures(img1, bbox)
 overlay_points(img1, startXs, startYs, 'postGetFeatures_TheMartian1')
 
+#draw the bounding boxes
+first = bbox[0,0,:]
+second = bbox[0,3,:]
+cv2.rectangle(img1,(first[0],first[1]), (second[0],second[1]),color=(0,255,0))
+plt.imshow(img1)
+
+#estimate the translation
 newXs, newYs = estimateAllTranslation(startXs, startYs, color_img1, color_img2)
 
 Xs, Ys, newbbox = applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox)
