@@ -1,3 +1,6 @@
+import numpy as np
+from skimage.transform import SimilarityTransform
+from skimage.transform import matrix_transform
 '''
   File name: applyGeometricTransformation.py
   Author:
@@ -18,6 +21,49 @@
     - Output newbbox: corner coordiantes of all detected bounding boxes after transformation
 '''
 
-def applyGeometricTransformation(startX, startY, newXs, newYs, bbox):
-  #TODO: Your code here
-  return Xs, Ys, newbbox
+def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
+  #find the number of faces and number of features on each face
+  [_, numFaces] = startXs
+
+  #instantiate the outputs
+  Xs = []
+  Ys = []
+  newbbox = np.zeros(numFaces,4,2)
+
+  #loop over the number of faces
+  for face in range(0,numFaces):
+    #find the distances between the points
+    distances = np.norm((startXs[:,face] - newXs[:,face]) + (startYs[:,face] - newYs[:,face]))
+
+    #set the maxDistance beyond which a feature is an outlier
+    maxDistance = 4
+
+    #Remove all the outlier points with distance between original and correspondance greater than maxDistance
+    newXsWithoutOutliers = newXs[distances<maxDistance]
+    newYsWithoutOutliers = newYs[distances<maxDistance]
+    startXsWithoutOutliers = startXs[distances < maxDistance]
+    startYsWithoutOutliers = startYs[distances < maxDistance]
+
+    #get the current bounding box
+    currentBbox = bbox[face, :, :]
+
+    #find the similarity transform
+    transform = SimilarityTransform.__init__()
+    transformationWorked = transform.estimate([startXsWithoutOutliers,startYsWithoutOutliers],[newXsWithoutOutliers,newYsWithoutOutliers])
+
+    #if the transformation was successful
+    if (transformationWorked):
+        #get the transformation matrix
+        homoMatrix = transform.params
+    else:
+        homoMatrix = np.eye(3,3)
+
+    #transform the image and add to newbbox
+    currentNewBbox = matrix_transform(currentBbox,homoMatrix)
+    newbbox[face,:,:] = currentNewBbox
+
+    #add the new Xs and Ys to final Xs and Ys
+    Xs[:,face] = newXsWithoutOutliers
+    Ys[:,face] = newYsWithoutOutliers
+
+  return [Xs, Ys, newbbox]

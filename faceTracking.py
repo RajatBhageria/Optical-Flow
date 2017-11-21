@@ -7,6 +7,7 @@ import numpy as np
 import cv2
 import detectFace
 import getFeatures
+import estimateAllTranslation
 
 '''
   File clarification:
@@ -61,5 +62,6 @@ def faceTracking(rawVideo):
     #cv2.rectangle can be used to draw rectangles if needed
 
     #step 3 TODO:
-    
+    #[newXs, newYs] = estimateAllTranslation(x, y, img1, img2)
+    #[Xs, Ys, newbbox] = applyGeometricTransformation(x, y, newXs, newYs, bbox)
     return trackedVideo
