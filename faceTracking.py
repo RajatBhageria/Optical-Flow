@@ -58,6 +58,8 @@ def faceTracking(rawVideo):
     init_frame = f
     init_img = frames[init_frame,:,:,:]
     init_img_gray = cv2.cvtColor(init_img, cv2.COLOR_BGR2GRAY)
+    #there will always be 1000 xy's, because we have padded with (0,0)
+    #make srue to ignore the (0,0) points later in the code
     startXs, startYs = getFeatures(init_img_gray, face)
 
     ### STILL LOT TO DO FROM HERE ON!

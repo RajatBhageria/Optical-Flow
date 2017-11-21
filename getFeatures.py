@@ -27,21 +27,23 @@ def getFeatures(img, bbox):
         boxed_img[y1:y2+1, x1:x2+1] = img[y1:y2+1, x1:x2+1]
 
     #now we do corner detection
-    features_array = feature.corner_shi_tomasi(boxed_img, sigma=1).astype(int)
+    features_array = feature.corner_shi_tomasi(boxed_img, sigma=1)
 
     #suppress everything except for the top 1000 points
     features_sorted = np.sort(features_array, axis=None)
     thresh = features_sorted[-1000]
     features_array[features_array < thresh] = 0
     features_array[features_array > 0] = 1
+    features_array = features_array.astype(bool)
 
-    x,y = np.meshgrid(c,r)
+    x,y = np.meshgrid(range(c), range(r))
     x = x[features_array]
     y = y[features_array]
 
     if x.size > 1000 :
         x = x[0:1000]
         y = y[0:1000]
+    #we pad the array with 0's so that we always have 1000 points of interest no matter what
     elif x.size < 1000 :
         x_pad = np.zeros([1000], np.int)
         y_pad = np.zeros([1000], np.int)
