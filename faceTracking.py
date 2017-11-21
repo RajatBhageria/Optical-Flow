@@ -27,15 +27,18 @@ def faceTracking(rawVideo):
     frame_height = int(cap.get(4))
     num_frames = int(cap.get(7))
     #create an array that holds all the frames in the video, format: frame_number x width x height
-    frames = np.array([num_frames, frame_width, frame_height, 3])
+    frames = np.zeros([num_frames, frame_height, frame_width, 3])
     f = 0
 
     while(cap.isOpened()):
         ret, frame = cap.read()
         #cv2.imshow('fr ame')
         frames[f,:,:,:]= frame
+
         f+=1
         if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+        if f== num_frames :
             break
 
     cap.release()
