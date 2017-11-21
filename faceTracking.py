@@ -75,9 +75,13 @@ def faceTracking(rawVideo):
     #draw rectangles of all the faces on the current image
     initImgWithBBox = init_img
     [numFaces,_,_] = face.shape
-    for face in range(0,numFaces):
-        bboxOfCurrFace = face[face,:,:]
-        initImgWithBBox = cv2.rect(initImgWithBBox,bboxOfCurrFace[0,:],bboxOfCurrFace[3,:])
+    for i in range(0,numFaces):
+        bboxOfCurrFace = face[i,:,:]
+        # get the position of the corners of the bounding box for the current face
+        first = bboxOfCurrFace[0,:]
+        second = bboxOfCurrFace[3,:]
+        # add a bounding box to the initial image
+        cv2.rect(initImgWithBBox,(first[0],first[1]),(second[0],second[1]))
 
     #add the initial image as the first image
     outputMatrix[0,:,:,:] = initImgWithBBox
@@ -92,9 +96,13 @@ def faceTracking(rawVideo):
 
         #now add a rectangle of newbbox to img2
         img2WithBoundingBox = img2
-        for face in range(0, numFaces):
-            bboxOfCurrFace = newbbox[face, :, :]
-            img2WithBoundingBox = cv2.rect(img2WithBoundingBox, bboxOfCurrFace[0, :], bboxOfCurrFace[3, :])
+        for facei in range(0, numFaces):
+            #get the bounding box for the current face
+            bboxOfCurrFace = newbbox[facei, :, :]
+            #get the positions of the two corners for the bounding box of the current face
+            first = bboxOfCurrFace[0,:]
+            second = bboxOfCurrFace[3,:]
+            img2WithBoundingBox = cv2.rect(img2WithBoundingBox, (first[0],first[1]), (second[0],second[1]))
 
         #add img2 to the output matrix
         outputMatrix[frame,:,:,:] = img2WithBoundingBox
