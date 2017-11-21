@@ -5,7 +5,7 @@
 '''
 import numpy as np
 from skimage import feature
-from helper import anms, thresholdInBBox
+#from helper import anms, thresholdInBBox
 '''
   File clarification:
     Detect features within each detected bounding box
@@ -30,7 +30,6 @@ def getFeatures(img, bbox):
     #now we do corner detection
     features_array = feature.corner_shi_tomasi(boxed_img, sigma=1)
 
-    '''
     #suppress everything except for the top 1000 points
     features_sorted = np.sort(features_array, axis=None)
     thresh = features_sorted[-1000]
@@ -61,5 +60,6 @@ def getFeatures(img, bbox):
     maxY = bbox[0][2][1]
     thresholded_features = thresholdInBBox(features_array, minX, maxX, minY, maxY)
     x, y, rmax = anms(thresholded_features, 100)
+    '''
 
     return x, y
