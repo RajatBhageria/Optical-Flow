@@ -5,10 +5,10 @@
 '''
 import numpy as np
 import cv2
-import detectFace
-import getFeatures
-import estimateAllTranslation
-import applyGeometricTransformation
+from detectFace import detectFace
+from getFeatures import getFeatures
+from estimateAllTranslation import estimateAllTranslation
+from applyGeometricTransformation import applyGeometricTransformation
 
 '''
   File clarification:
@@ -27,7 +27,7 @@ def faceTracking(rawVideo):
     frame_height = int(cap.get(4))
     num_frames = int(cap.get(7))
     #create an array that holds all the frames in the video, format: frame_number x width x height
-    frames = np.zeros([num_frames, frame_height, frame_width, 3])
+    frames = np.zeros([num_frames, frame_height, frame_width, 3], np.uint8)
     f = 0
 
     while(cap.isOpened()):
@@ -49,11 +49,11 @@ def faceTracking(rawVideo):
     face_found = False
     f = 0
     face = None
-    while ~face_found:
+    while not face_found:
         #face is a Fx4x2 bounding box
         face = detectFace(frames[f,:,:,:]);
         f+=1
-        if face :
+        if face is not None :
             face_found = True
             f-=1
 
