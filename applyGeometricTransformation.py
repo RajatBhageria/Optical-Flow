@@ -33,7 +33,7 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
   #loop over the number of faces
   for face in range(0,numFaces):
     #find the distances between the points
-    distances = np.norm((startXs[:,face] - newXs[:,face]) + (startYs[:,face] - newYs[:,face]))
+    distances = np.linalg.norm((startXs[:,face] - newXs[:,face]) + (startYs[:,face] - newYs[:,face]))
 
     #set the maxDistance beyond which a feature is an outlier
     maxDistance = 4
