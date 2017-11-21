@@ -32,7 +32,7 @@ def getFeatures(img, bbox):
 
     #suppress everything except for the top 1000 points
     features_sorted = np.sort(features_array, axis=None)
-    thresh = features_sorted[-1000]
+    thresh = features_sorted[-250]
     features_array[features_array < thresh] = 0
     features_array[features_array > 0] = 1
     features_array = features_array.astype(bool)
@@ -41,13 +41,13 @@ def getFeatures(img, bbox):
     x = x[features_array]
     y = y[features_array]
 
-    if x.size > 1000 :
-        x = x[0:1000]
-        y = y[0:1000]
+    if x.size > 250 :
+        x = x[0:250]
+        y = y[0:250]
     #we pad the array with 0's so that we always have 1000 points of interest no matter what
-    elif x.size < 1000 :
-        x_pad = np.zeros([1000], np.int)
-        y_pad = np.zeros([1000], np.int)
+    elif x.size < 250 :
+        x_pad = np.zeros([250], np.int)
+        y_pad = np.zeros([250], np.int)
         x_pad[0 : x.size] = x
         y_pad[0 : y.size] = y
         x = x_pad
