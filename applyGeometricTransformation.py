@@ -66,4 +66,4 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
     Xs[:,face] = newXsWithoutOutliers
     Ys[:,face] = newYsWithoutOutliers
 
-  return [Xs, Ys, newbbox]
+  return Xs, Ys, newbbox
