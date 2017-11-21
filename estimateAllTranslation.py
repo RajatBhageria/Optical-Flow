@@ -40,8 +40,8 @@ def estimateAllTranslation(startXs, startYs, img1, img2):
       for feature in range(0, numFeatures):
 
           #get the current feature for the current face
-          startX = startXs[feature, face];
-          startY = startYs[feature, face];
+          startX = startXs[feature, face]
+          startY = startYs[feature, face]
 
           # Estimate the translation for the current feature
           [newX, newY]=estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2)
@@ -50,4 +50,4 @@ def estimateAllTranslation(startXs, startYs, img1, img2):
           newXs[feature, face] = newX
           newYs[feature, face] = newY
 
-  return [newXs, newYs]
+  return newXs, newYs

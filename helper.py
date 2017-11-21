@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 from skimage import feature
+import cv2
 '''
   File clarification:
   Include any helper function you want for this project such as the 
@@ -73,3 +74,14 @@ def anms(cimg, max_pts):
     rmax  = store[:,2][max_pts + 1]
           
     return x, y, rmax
+
+def videoToFrames(filepath):
+    vidcap = cv2.VideoCapture(filepath)
+    success,image = vidcap.read()
+    count = 0
+    success = True
+    while success:
+        success,image = vidcap.read()
+        print('Read a new frame: ', success)
+        cv2.imwrite("./data/easy/TheMartian%d.jpg" % count, image)     # save frame as JPEG file
+        count += 1
