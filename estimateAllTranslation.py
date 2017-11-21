@@ -1,4 +1,4 @@
-import estimateFeatureTranslation
+from estimateFeatureTranslation import estimateFeatureTranslation
 import numpy as np
 from helper import rgb2gray
 
