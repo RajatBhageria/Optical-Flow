@@ -108,5 +108,11 @@ def faceTracking(rawVideo):
         outputMatrix[frame,:,:,:] = img2WithBoundingBox
 
     #convert outputMatrix to a video and return as trackedVideo
+    video = cv2.VideoWriter('finalVideo.avi', -1, 1, (frame_width, frame_height))
+    for framei in range(0,num_frames-f):
+        currFrame = outputMatrix[framei,:,:,:]
+        video.write(currFrame)
+    cv2.destroyAllWindows()
+    trackedVideo = video.release()
 
     return trackedVideo
