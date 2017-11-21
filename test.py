@@ -10,7 +10,7 @@ from detectFace import detectFace
 from getFeatures import getFeatures
 from estimateAllTranslation import estimateAllTranslation
 from applyGeometricTransformation import applyGeometricTransformation
-from helpers import rgb2gray, overlay_points
+from helper import rgb2gray, overlay_points
 import matplotlib.pyplot as plt
 
 color_img1 = plt.imread('./data/easy/TheMartian1.jpg')

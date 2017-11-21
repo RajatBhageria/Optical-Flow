@@ -55,7 +55,7 @@ def detectFace(img):
 
         f+=1
 
-    if bbox == np.zeros([np.size(faces,0),4,2]) :
+    if np.array_equal(bbox, np.zeros([np.size(faces,0),4,2])) :
         return None
     else :
         return bbox
