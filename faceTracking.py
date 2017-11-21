@@ -71,7 +71,7 @@ def faceTracking(rawVideo):
 
     #draw rectangles of all the faces on the current image
     initImgWithBBox = init_img
-    [numFaces,_,_] = face
+    [numFaces,_,_] = face.shape
     for face in range(0,numFaces):
         bboxOfCurrFace = face[face,:,:]
         initImgWithBBox = cv2.rect(initImgWithBBox,bboxOfCurrFace[0,:],bboxOfCurrFace[3,:])
@@ -80,7 +80,7 @@ def faceTracking(rawVideo):
     outputMatrix[0,:,:,:] = initImgWithBBox
 
     #actually do the transform and find the new bounding box
-    for frame in range(f,num_frames-1):
+    for frame in range(f,num_frames-1): #this should probably not be -1
         img1 = frames[frame,:,:,:]
         img2 = frames[frame+1,:,:,:]
 
