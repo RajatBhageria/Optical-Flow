@@ -10,6 +10,7 @@ from detectFace import detectFace
 from getFeatures import getFeatures
 from estimateAllTranslation import estimateAllTranslation
 from applyGeometricTransformation import applyGeometricTransformation
+from helper import plotPoints
 
 '''
   File clarification:
@@ -83,6 +84,7 @@ def faceTracking(rawVideo):
         second = bboxOfCurrFace[3,:]
         # add a bounding box to the initial image
         cv2.rectangle(initImgWithBBox,(first[0],first[1]),(second[0],second[1]), (255,0,0))
+        initImgWithBBox = plotPoints(initImgWithBBox, startXs[:, i], startYs[:, i])
 
     #add the initial image as the first image
     outputMatrix[0,:,:,:] = initImgWithBBox
@@ -104,7 +106,8 @@ def faceTracking(rawVideo):
             first = bboxOfCurrFace[0,:].astype(int)
             second = bboxOfCurrFace[3,:].astype(int)
             img2WithBoundingBox = cv2.rectangle(img2WithBoundingBox, (first[0],first[1]), (second[0],second[1]), (255,0,0))
-
+            img2WithBoundBox = plotPoints(img2WithBoundBox, Xs[:, i], Ys[:, i])
+            
         #add img2 to the output matrix
         outputMatrix[frame,:,:,:] = img2WithBoundingBox
 
