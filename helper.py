@@ -23,6 +23,10 @@ def overlay_points(img, x, y, name):
     plt.scatter(x, y,color='red',marker='o', s=1)
     plt.savefig(name)
     plt.close("all")
+
+def plotPoints(img, x, y):
+    img[x, y] = [0, 255, 0]
+    return img
     
 def thresholdInBBox(features_array, minX, maxX, minY, maxY):
     cimg = features_array[minY: maxY + 1, minX: maxX + 1]
