@@ -70,7 +70,7 @@ def faceTracking(rawVideo):
     #cv2.rectangle can be used to draw rectangles if needed
 
     #initialize the the output matrix of tracked images
-    outputMatrix = np.zeros((num_frames-f,frame_width,frame_height))
+    outputMatrix = np.zeros((num_frames-f,frame_height,frame_width, 3))
 
     #draw rectangles of all the faces on the current image
     initImgWithBBox = init_img
@@ -81,7 +81,7 @@ def faceTracking(rawVideo):
         first = bboxOfCurrFace[0,:]
         second = bboxOfCurrFace[3,:]
         # add a bounding box to the initial image
-        cv2.rect(initImgWithBBox,(first[0],first[1]),(second[0],second[1]))
+        cv2.rectangle(initImgWithBBox,(first[0],first[1]),(second[0],second[1]), (255,0,0))
 
     #add the initial image as the first image
     outputMatrix[0,:,:,:] = initImgWithBBox
