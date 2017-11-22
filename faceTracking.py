@@ -5,6 +5,7 @@
 '''
 import numpy as np
 import cv2
+import matplotlib as plt
 from detectFace import detectFace
 from getFeatures import getFeatures
 from estimateAllTranslation import estimateAllTranslation
@@ -108,9 +109,12 @@ def faceTracking(rawVideo):
         outputMatrix[frame,:,:,:] = img2WithBoundingBox
 
     #convert outputMatrix to a video and return as trackedVideo
-    video = cv2.VideoWriter('finalVideo.avi', -1, 1, (frame_width, frame_height))
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+
+    video = cv2.VideoWriter('finalVideo.avi', fourcc, 20.0, (frame_height, frame_width))
     for framei in range(0,num_frames-f):
         currFrame = outputMatrix[framei,:,:,:]
+        plt.imshow(currFrame)
         video.write(currFrame)
     cv2.destroyAllWindows()
     trackedVideo = video.release()
