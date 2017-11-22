@@ -6,6 +6,7 @@
 import numpy as np
 import cv2
 import matplotlib as plt
+import imageio
 from detectFace import detectFace
 from getFeatures import getFeatures
 from estimateAllTranslation import estimateAllTranslation
@@ -106,11 +107,12 @@ def faceTracking(rawVideo):
             first = bboxOfCurrFace[0,:].astype(int)
             second = bboxOfCurrFace[3,:].astype(int)
             img2WithBoundingBox = cv2.rectangle(img2WithBoundingBox, (first[0],first[1]), (second[0],second[1]), (255,0,0))
-            img2WithBoundBox = plotPoints(img2WithBoundBox, Xs[:, i], Ys[:, i])
+            img2WithBoundingBox = plotPoints(img2WithBoundingBox, Xs[:, i], Ys[:, i])
             
         #add img2 to the output matrix
         outputMatrix[frame,:,:,:] = img2WithBoundingBox
 
+    '''
     #convert outputMatrix to a video and return as trackedVideo
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
@@ -120,5 +122,7 @@ def faceTracking(rawVideo):
         video.write(currFrame)
     cv2.destroyAllWindows()
     trackedVideo = video.release()
+    '''
+    imageio.mimwrite('finalVideo.mp4', outputMatrix, fps = 30)
 
     return trackedVideo
