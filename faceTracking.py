@@ -38,7 +38,7 @@ def faceTracking(rawVideo):
         f+=1
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-        if f== num_frames :
+        if f== num_frames - 1 :
             break
 
     cap.release()
@@ -70,7 +70,7 @@ def faceTracking(rawVideo):
     #cv2.rectangle can be used to draw rectangles if needed
 
     #initialize the the output matrix of tracked images
-    outputMatrix = np.zeros(num_frames-f,frame_width,frame_height)
+    outputMatrix = np.zeros((num_frames-f,frame_width,frame_height))
 
     #draw rectangles of all the faces on the current image
     initImgWithBBox = init_img
