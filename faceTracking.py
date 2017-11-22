@@ -102,7 +102,7 @@ def faceTracking(rawVideo):
             #get the positions of the two corners for the bounding box of the current face
             first = bboxOfCurrFace[0,:]
             second = bboxOfCurrFace[3,:]
-            img2WithBoundingBox = cv2.rect(img2WithBoundingBox, (first[0],first[1]), (second[0],second[1]))
+            img2WithBoundingBox = cv2.rectangle(img2WithBoundingBox, (first[0],first[1]), (second[0],second[1]), (255,0,0))
 
         #add img2 to the output matrix
         outputMatrix[frame,:,:,:] = img2WithBoundingBox
