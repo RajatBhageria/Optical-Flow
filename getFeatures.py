@@ -55,8 +55,8 @@ def getFeatures(img, bbox):
             y_pad[0 : y.size] = y
             x = x_pad
             y = y_pad 
-        xOutput[: , count] = x.T
-        yOutput[ :, count] = y.T
+        xOutput[: , count] = x
+        yOutput[ :, count] = y
         count += 1
         
     '''
