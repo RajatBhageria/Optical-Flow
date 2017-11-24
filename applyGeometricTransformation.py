@@ -67,7 +67,6 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
         #do the transform
         if (homoMatrix.shape==(3,3)):
             currentNewBbox = matrix_transform(currentBbox, homoMatrix)
-            print homoMatrix.shape
     else:
         #set the old bbox to the current one
         currentNewBbox = currentBbox

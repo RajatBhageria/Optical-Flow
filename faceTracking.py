@@ -93,17 +93,16 @@ def faceTracking(rawVideo):
         img2 = frames[frame+1,:,:,:]
 
         #find the face on the first image
-        faceCurr = detectFace(img1);
-        if faceCurr is not None:
-            face = faceCurr
-        #else
-            #just use the last face since it couldn't detect a new face
-
-        #convert first image to grey
-        img1grey = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
-
-        #find the starting features on the first image
-        startXs, startYs = getFeatures(img1grey, face)
+        # faceCurr = detectFace(img1);
+        # if faceCurr is not None:
+        #     face = faceCurr
+        # #else
+        #     #just use the last face since it couldn't detect a new face
+        #
+        # #convert first image to grey
+        # img1grey = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+        # #find the starting features on the first image
+        # startXs, startYs = getFeatures(img1grey, face)
 
         [newXs, newYs] = estimateAllTranslation(startXs, startYs, img1, img2)
         [Xs, Ys, newbbox] = applyGeometricTransformation(startXs, startYs, newXs, newYs, face)
@@ -126,6 +125,13 @@ def faceTracking(rawVideo):
             
         #add img2 to the output matrix
         outputMatrix[frame,:,:,:] = img2WithBoundingBox
+
+        #set the new bbox to the face for the next iteration
+        face = newbbox
+
+        #set the xs and ys of the features for the new features
+        startXs = np.rint(newXs).astype(int)
+        startYs = np.rint(newYs).astype(int)
 
     #output the final video
     imageio.mimwrite('finalVideo.avi', outputMatrix, fps = 30)
