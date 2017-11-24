@@ -85,7 +85,7 @@ def faceTracking(rawVideo):
         second = bboxOfCurrFace[3,:]
         # add a bounding box to the initial image
         cv2.rectangle(initImgWithBBox,(first[0],first[1]),(second[0],second[1]), (255,0,0))
-        initImgWithBBox = plotPoints(initImgWithBBox, startXs[:, i], startYs[:, i])
+        initImgWithBBox = plotPoints(initImgWithBBox, startYs[:, i], startXs[:, i])
 
     #add the initial image as the first image
     outputMatrix[0,:,:,:] = initImgWithBBox
