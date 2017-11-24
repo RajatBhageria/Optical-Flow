@@ -3,5 +3,5 @@ import cv2
 
 filename = './Data/easy/TheMartian.mp4'
 #rawVideo = cv2.VideoCapture(filename)
-finalVideo = faceTracking(filename)
+faceTracking(filename)
 

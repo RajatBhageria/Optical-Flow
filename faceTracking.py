@@ -125,6 +125,6 @@ def faceTracking(rawVideo):
     cv2.destroyAllWindows()
     trackedVideo = video.release()
     '''
-    trackedVideo = imageio.mimwrite('finalVideo_strangerThings.mp4', outputMatrix, fps = 30)
-
+    imageio.mimwrite('finalVideo.avi', outputMatrix, fps = 30)
+    trackedVideo = []
     return trackedVideo
