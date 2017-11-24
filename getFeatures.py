@@ -21,7 +21,8 @@ def getFeatures(img, bbox):
     r,c = img.shape
     boxed_img = np.zeros(img.shape, np.uint8)
     [numFaces, numCorners, coords] = bbox.shape
-    xOutput = yOutput = np.zeros((250, numFaces), dtype=np.int_)
+    xOutput = np.zeros((250, numFaces), dtype=np.int_)
+    yOutput = np.zeros((250, numFaces), dtype=np.int_)
     count = 0
     for arr in bbox :
         x1 = arr[0,0]
@@ -32,7 +33,7 @@ def getFeatures(img, bbox):
 
         #now we do corner detection
         features_array = feature.corner_shi_tomasi(boxed_img, sigma=1)
-    
+
         #suppress everything except for the top 1000 points
         features_sorted = np.sort(features_array, axis=None)
         thresh = features_sorted[-250]
@@ -55,8 +56,8 @@ def getFeatures(img, bbox):
             y_pad[0 : y.size] = y
             x = x_pad
             y = y_pad 
-        xOutput[: , count] = x
-        yOutput[ :, count] = y
+        xOutput[: , count] = x.T
+        yOutput[ :, count] = y.T
         count += 1
         
     '''
