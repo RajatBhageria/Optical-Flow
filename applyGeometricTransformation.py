@@ -54,15 +54,21 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
     dest = np.concatenate((newXsWithoutOutliers,newYsWithoutOutliers),axis=1)
     transformationWorked = transform.estimate(src,dest)
 
+    currentNewBbox = []
+
     #if the transformation was successful
     if (transformationWorked):
         #get the transformation matrix
         homoMatrix = transform.params
+        #do the transform
+        if (homoMatrix.shape==(3,3)):
+            currentNewBbox = matrix_transform(currentBbox, homoMatrix)
+            print homoMatrix.shape
     else:
-        homoMatrix = np.eye(3,dtype=int)
+        #set the old bbox to the current one
+        currentNewBbox = currentBbox
 
-    #transform the image and add to newbbox
-    currentNewBbox = matrix_transform(currentBbox,homoMatrix)
+    #add to newbbox
     newbbox[face,:,:] = currentNewBbox
 
     #add the new Xs and Ys to final Xs and Ys
