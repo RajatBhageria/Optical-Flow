@@ -40,18 +40,22 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
     maxDistance = 4
 
     #Remove all the outlier points with distance between original and correspondance greater than maxDistance
-    newXsWithoutOutliers = newXs[distances<maxDistance]
-    newYsWithoutOutliers = newYs[distances<maxDistance]
-    startXsWithoutOutliers = startXs[distances < maxDistance]
-    startYsWithoutOutliers = startYs[distances < maxDistance]
+    newXofFace= newXs[:,face]
+    newXsWithoutOutliers = newXofFace[distances < maxDistance]
+    newYofFace = newYs[:,face]
+    newYsWithoutOutliers = newYofFace[distances < maxDistance]
+    startXofFace = startXs[:,face]
+    startXsWithoutOutliers = startXofFace[distances < maxDistance]
+    startYofFace = startYs[:, face]
+    startYsWithoutOutliers = startYofFace[distances < maxDistance]
 
     #get the current bounding box
     currentBbox = bbox[face, :, :]
 
     #find the similarity transform
     transform = SimilarityTransform()
-    src = np.concatenate((startXsWithoutOutliers,startYsWithoutOutliers),axis=1)
-    dest = np.concatenate((newXsWithoutOutliers,newYsWithoutOutliers),axis=1)
+    src = np.column_stack((startXsWithoutOutliers,startYsWithoutOutliers))
+    dest = np.column_stack((newXsWithoutOutliers,newYsWithoutOutliers))
     transformationWorked = transform.estimate(src,dest)
 
     currentNewBbox = []
@@ -76,12 +80,12 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
     if (len(Xs) ==0):
         Xs = newXsWithoutOutliers
     else: #multiple faces
-        Xs.append(newXsWithoutOutliers)
+        np.append(Xs,newXsWithoutOutliers)
 
     # only once face or the first face
     if (len(Ys) == 0):
         Ys = newYsWithoutOutliers
     else: #multiple faces
-        Ys.append(newYsWithoutOutliers)
+        np.append(Ys,newYsWithoutOutliers)
 
   return np.asarray(Xs), np.asarray(Ys), newbbox

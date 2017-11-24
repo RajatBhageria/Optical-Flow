@@ -119,7 +119,10 @@ def faceTracking(rawVideo):
             #draw the bounding box
             img2WithBoundingBox = cv2.rectangle(img2WithBoundingBox, (first[0],first[1]), (second[0],second[1]), (255,0,0))
             #draw the feature points
-            img2WithBoundingBox = plotPoints(img2WithBoundingBox, Ys[:, facei], Xs[:, facei])
+            if numFaces == 1:
+                img2WithBoundingBox = plotPoints(img2WithBoundingBox, Ys, Xs)
+            else:
+                img2WithBoundingBox = plotPoints(img2WithBoundingBox, Ys[:, facei], Xs[:, facei])
             
         #add img2 to the output matrix
         outputMatrix[frame,:,:,:] = img2WithBoundingBox
