@@ -93,7 +93,11 @@ def faceTracking(rawVideo):
         img2 = frames[frame+1,:,:,:]
 
         #find the face on the first image
-        face = detectFace(img1);
+        faceCurr = detectFace(img1);
+        if faceCurr is not None:
+            face = faceCurr
+        #else
+            #just use the last face since it couldn't detect a new face
 
         #convert first image to grey
         img1grey = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)

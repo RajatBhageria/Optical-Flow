@@ -59,7 +59,7 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
         #get the transformation matrix
         homoMatrix = transform.params
     else:
-        homoMatrix = np.eye(3,3)
+        homoMatrix = np.eye(3,dtype=int)
 
     #transform the image and add to newbbox
     currentNewBbox = matrix_transform(currentBbox,homoMatrix)
