@@ -68,10 +68,6 @@ def faceTracking(rawVideo):
     #make srue to ignore the (0,0) points later in the code
     startXs, startYs = getFeatures(init_img_gray, face)
 
-    ### STILL LOT TO DO FROM HERE ON!
-
-    #cv2.rectangle can be used to draw rectangles if needed
-
     #initialize the the output matrix of tracked images
     outputMatrix = np.zeros((num_frames-f,frame_height,frame_width, 3))
 
@@ -92,13 +88,23 @@ def faceTracking(rawVideo):
 
     #actually do the transform and find the new bounding box
     for frame in range(f,num_frames-1): #this should probably not be -1
+        #get the two consecutive frames at the index
         img1 = frames[frame,:,:,:]
         img2 = frames[frame+1,:,:,:]
+
+        #find the face on the first image
+        face = detectFace(img1);
+
+        #convert first image to grey
+        img1grey = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+
+        #find the starting features on the first image
+        startXs, startYs = getFeatures(img1grey, face)
 
         [newXs, newYs] = estimateAllTranslation(startXs, startYs, img1, img2)
         [Xs, Ys, newbbox] = applyGeometricTransformation(startXs, startYs, newXs, newYs, face)
 
-        #now add a rectangle of newbbox to img2
+        #now add a rectangle of newbbox to img2 and add the feature points
         img2WithBoundingBox = img2
         for facei in range(0, numFaces):
             #get the bounding box for the current face
@@ -114,17 +120,7 @@ def faceTracking(rawVideo):
         #add img2 to the output matrix
         outputMatrix[frame,:,:,:] = img2WithBoundingBox
 
-    '''
-    #convert outputMatrix to a video and return as trackedVideo
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
-
-    video = cv2.VideoWriter('finalVideo.avi', fourcc, 20.0, (frame_height, frame_width))
-    for framei in range(0,num_frames-f):
-        currFrame = outputMatrix[framei,:,:,:]
-        video.write(currFrame)
-    cv2.destroyAllWindows()
-    trackedVideo = video.release()
-    '''
+    #output the final video
     imageio.mimwrite('finalVideo.avi', outputMatrix, fps = 30)
     trackedVideo = []
     return trackedVideo
