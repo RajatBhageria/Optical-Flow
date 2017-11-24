@@ -106,8 +106,10 @@ def faceTracking(rawVideo):
             #get the positions of the two corners for the bounding box of the current face
             first = bboxOfCurrFace[0,:].astype(int)
             second = bboxOfCurrFace[3,:].astype(int)
+            #draw the bounding box
             img2WithBoundingBox = cv2.rectangle(img2WithBoundingBox, (first[0],first[1]), (second[0],second[1]), (255,0,0))
-            img2WithBoundingBox = plotPoints(img2WithBoundingBox, Xs[:, i], Ys[:, i])
+            #draw the feature points
+            img2WithBoundingBox = plotPoints(img2WithBoundingBox, Ys[:, facei], Xs[:, facei])
             
         #add img2 to the output matrix
         outputMatrix[frame,:,:,:] = img2WithBoundingBox
@@ -123,6 +125,6 @@ def faceTracking(rawVideo):
     cv2.destroyAllWindows()
     trackedVideo = video.release()
     '''
-    imageio.mimwrite('finalVideo_strangerThings.mp4', outputMatrix, fps = 30)
+    trackedVideo = imageio.mimwrite('finalVideo_strangerThings.mp4', outputMatrix, fps = 30)
 
     return trackedVideo

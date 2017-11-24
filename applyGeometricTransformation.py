@@ -66,7 +66,16 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
     newbbox[face,:,:] = currentNewBbox
 
     #add the new Xs and Ys to final Xs and Ys
-    Xs.append(newXsWithoutOutliers)
-    Ys.append(newYsWithoutOutliers)
+    #only once face or the first face
+    if (len(Xs) ==0):
+        Xs = newXsWithoutOutliers
+    else: #multiple faces
+        Xs.append(newXsWithoutOutliers)
+
+    # only once face or the first face
+    if (len(Ys) == 0):
+        Ys = newYsWithoutOutliers
+    else: #multiple faces
+        Ys.append(newYsWithoutOutliers)
 
   return np.asarray(Xs), np.asarray(Ys), newbbox
