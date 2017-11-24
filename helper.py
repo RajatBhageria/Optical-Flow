@@ -25,6 +25,8 @@ def overlay_points(img, x, y, name):
     plt.close("all")
 
 def plotPoints(img, x, y):
+    x = x.astype(int)
+    y = y.astype(int)
     img[x, y] = [0, 255, 0]
     return img
     

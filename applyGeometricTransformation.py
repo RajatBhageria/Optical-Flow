@@ -69,4 +69,4 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
     Xs.append(newXsWithoutOutliers)
     Ys.append(newYsWithoutOutliers)
 
-  return Xs, Ys, newbbox
+  return np.asarray(Xs), np.asarray(Ys), newbbox
