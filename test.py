@@ -15,10 +15,10 @@ import matplotlib.pyplot as plt
 import cv2
 
 #create all the images
-color_img1 = plt.imread('./data/easy/TheMartian1.jpg')
+color_img1 = plt.imread('./data/medium/StrangerThings0.jpg')
 img1 = rgb2gray(color_img1)
 
-color_img2 = plt.imread('./data/easy/TheMartian2.jpg')
+color_img2 = plt.imread('./data/medium/StrangerThings1.jpg')
 img2 = rgb2gray(color_img2)
 
 #find the bounding boxes
