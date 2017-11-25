@@ -37,10 +37,10 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   # Calculate boundaries of window (normally 10x10 except when on boundary)
   startXWin = np.round(startX).astype(int)
   startYWin = np.round(startY).astype(int)
-  windowMinX = startXWin - 4 if startXWin - 4 > 0 else startXWin
-  windowMaxX = startXWin + 5 if startXWin + 5 < w else w - startXWin
-  windowMinY = startYWin - 4 if startYWin - 4 > 0 else startYWin
-  windowMaxY = startYWin + 5 if startYWin + 5 < h else h - startYWin
+  windowMinX = startXWin - 8 if startXWin - 8 > 0 else startXWin
+  windowMaxX = startXWin + 9 if startXWin + 9 < w else w - startXWin
+  windowMinY = startYWin - 8 if startYWin - 8 > 0 else startYWin
+  windowMaxY = startYWin + 9 if startYWin + 9 < h else h - startYWin
   
   # Get window points from Ix, Iy, and It
   Ix_window = Ix[windowMinY: windowMaxY, windowMinX: windowMaxX]
@@ -49,7 +49,8 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   
   #Fill in culmination matrices
   LHS_summation[0][0] = np.sum(np.multiply(Ix_window, Ix_window))
-  LHS_summation[0][1] = LHS_summation[1][0] = np.sum(np.multiply(Ix_window, Iy_window))
+  LHS_summation[0][1] = np.sum(np.multiply(Ix_window, Iy_window))
+  LHS_summation[1][0] = np.sum(np.multiply(Ix_window, Iy_window))
   LHS_summation[1][1] = np.sum(np.multiply(Iy_window, Iy_window))
   
   RHS_summation[0][0] = -1.0 * np.sum(np.multiply(Ix_window, It_window))
