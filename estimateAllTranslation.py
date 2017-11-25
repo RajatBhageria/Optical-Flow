@@ -4,7 +4,7 @@ from helper import rgb2gray
 
 '''
   File name: estimateAllTranslation.py
-  Author: Rajat Bhageria, Kashish Gupta, Rajiv O'Conner-Patel
+  Author: Rajat Bhageria, Rajiv O'Conner-Patel
   Date created:
 '''
 

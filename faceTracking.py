@@ -106,7 +106,7 @@ def faceTracking(rawVideo):
 
         [newXs, newYs] = estimateAllTranslation(startXs, startYs, img1, img2)
         [Xs, Ys, newbbox] = applyGeometricTransformation(startXs, startYs, newXs, newYs, face)
-
+        print newXs
         #now add a rectangle of newbbox to img2 and add the feature points
         img2WithBoundingBox = img2
         for facei in range(0, numFaces):
@@ -130,8 +130,8 @@ def faceTracking(rawVideo):
         face = newbbox
 
         #set the xs and ys of the features for the new features
-        startXs = np.rint(newXs).astype(int)
-        startYs = np.rint(newYs).astype(int)
+        startXs = newXs
+        startYs = newYs
 
     #output the final video
     imageio.mimwrite('finalVideo.avi', outputMatrix, fps = 30)

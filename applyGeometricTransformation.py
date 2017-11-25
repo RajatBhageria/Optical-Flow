@@ -3,7 +3,7 @@ from skimage.transform import SimilarityTransform
 from skimage.transform import matrix_transform
 '''
   File name: applyGeometricTransformation.py
-  Author:
+  Author: Rajat Bhageria, Rajiv O'Conner - Patel 
   Date created:
 '''
 

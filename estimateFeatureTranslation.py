@@ -1,6 +1,6 @@
 '''
   File name: estimateFeatureTranslation.py
-  Author: Rajiv Patel-O'Connor
+  Author: Rajiv Patel-O'Connor, Rajat Bhageria
   Date created: 11-20-2017
 '''
 
@@ -22,8 +22,6 @@ from helper import rgb2gray
 '''
 
 def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
-  #TODO: Your code here
-  
   #Convert from RGB to grayscale
   gray1 = rgb2gray(img1)
   gray2 = rgb2gray(img2)
@@ -37,10 +35,12 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   It = gray2 - gray1
   
   # Calculate boundaries of window (normally 10x10 except when on boundary)
-  windowMinX = startX - 4 if startX - 4 > 0 else startX
-  windowMaxX = startX + 5 if startX + 5 < w else w - startX
-  windowMinY = startY - 4 if startY - 4 > 0 else startY
-  windowMaxY = startY + 5 if startY + 5 < h else h - startY
+  startXWin = np.round(startX).astype(int)
+  startYWin = np.round(startY).astype(int)
+  windowMinX = startXWin - 4 if startXWin - 4 > 0 else startXWin
+  windowMaxX = startXWin + 5 if startXWin + 5 < w else w - startXWin
+  windowMinY = startYWin - 4 if startYWin - 4 > 0 else startYWin
+  windowMaxY = startYWin + 5 if startYWin + 5 < h else h - startYWin
   
   # Get window points from Ix, Iy, and It
   Ix_window = Ix[windowMinY: windowMaxY, windowMinX: windowMaxX]
