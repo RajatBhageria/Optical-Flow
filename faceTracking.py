@@ -106,7 +106,7 @@ def faceTracking(rawVideo):
 
         [newXs, newYs] = estimateAllTranslation(startXs, startYs, img1, img2)
         [Xs, Ys, newbbox] = applyGeometricTransformation(startXs, startYs, newXs, newYs, face)
-        print newXs
+        #print newXs
         #now add a rectangle of newbbox to img2 and add the feature points
         img2WithBoundingBox = img2
         for facei in range(0, numFaces):
