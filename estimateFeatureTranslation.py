@@ -43,10 +43,10 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   # Calculate boundaries of window (normally 10x10 except when on boundary)
   #startXWin = np.round(startX).astype(int)
   #startYWin = np.round(startY).astype(int)
-  windowMinX = startX - 24 if startX - 24 > 0 else startX
-  windowMaxX = startX + 25 if startX + 25 < w else w - startX
-  windowMinY = startY - 24 if startY - 25 > 0 else startY
-  windowMaxY = startY + 24 if startY + 25 < h else h - startY
+  windowMinX = startX - 4 if startX - 4 > 0 else startX
+  windowMaxX = startX + 5 if startX + 5 < w else w - startX
+  windowMinY = startY - 4 if startY - 4 > 0 else startY
+  windowMaxY = startY + 5 if startY + 5 < h else h - startY
   
   windowH = np.round(windowMaxY - windowMinY).astype(int)
   windowW = np.round(windowMaxX - windowMinX).astype(int)
@@ -79,6 +79,7 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   u, v = LHS_inverse.dot(RHS_summation)
   newX = startX + u
   newY = startY + v
+  print(u, v)
   
   return newX, newY
 

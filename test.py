@@ -15,10 +15,10 @@ import matplotlib.pyplot as plt
 import cv2
 
 #create all the images
-color_img1 = plt.imread('./data/easy/TheMartian0.jpg')
+color_img1 = plt.imread('./data/easy/TheMartian30.jpg')
 img1 = rgb2gray(color_img1)
 
-color_img2 = plt.imread('./data/easy/TheMartian1.jpg')
+color_img2 = plt.imread('./data/easy/TheMartian31.jpg')
 img2 = rgb2gray(color_img2)
 
 #find the bounding boxes
@@ -38,7 +38,10 @@ plt.imshow(img1)
 newXs, newYs = estimateAllTranslation(startXs, startYs, color_img1, color_img2)
 
 Xs, Ys, newbbox = applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox)
-
-#overlay_points(img2, Xs, Ys, 'postApplyGeomTransform_TheMartian2')
+#draw the bounding boxes
+first = bbox[0,0,:]
+second = bbox[0,3,:]
+cv2.rectangle(img2,(first[0],first[1]), (second[0],second[1]),color=(0,255,0))
+overlay_points(img2, Xs, Ys, 'postApplyGeomTransform_TheMartian31')
 
 
