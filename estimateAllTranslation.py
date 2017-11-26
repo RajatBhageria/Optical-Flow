@@ -1,5 +1,6 @@
 from estimateFeatureTranslation import estimateFeatureTranslation
 import numpy as np
+import cv2
 from helper import rgb2gray
 
 '''
@@ -32,7 +33,9 @@ def estimateAllTranslation(startXs, startYs, img1, img2):
   newYs = np.zeros((numFeatures,numFaces))
 
   #Get the gradients of the first image
-  [Ix, Iy] = np.gradient(grey1)
+  #[Ix, Iy] = np.gradient(grey1)
+  Ix = cv2.Sobel(grey1, cv2.CV_64F, 1, 0, ksize=5)
+  Iy = cv2.Sobel(grey1, cv2.CV_64F, 0, 1, ksize=5)
 
   #Loop through all the faces
   for face in range(0, numFaces):

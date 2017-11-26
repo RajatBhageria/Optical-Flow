@@ -39,14 +39,13 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   f_Iy = interp2d(x, y, Iy)
   f_It = interp2d(x, y, It)
   
-  
   # Calculate boundaries of window (normally 10x10 except when on boundary)
   #startXWin = np.round(startX).astype(int)
   #startYWin = np.round(startY).astype(int)
-  windowMinX = startX - 4 if startX - 4 > 0 else startX
-  windowMaxX = startX + 5 if startX + 5 < w else w - startX
-  windowMinY = startY - 4 if startY - 4 > 0 else startY
-  windowMaxY = startY + 5 if startY + 5 < h else h - startY
+  windowMinX = startX - 9 if startX - 9 > 0 else startX
+  windowMaxX = startX + 10 if startX + 10 < w else w - startX
+  windowMinY = startY - 9 if startY - 9 > 0 else startY
+  windowMaxY = startY + 10 if startY + 10 < h else h - startY
   
   windowH = np.round(windowMaxY - windowMinY).astype(int)
   windowW = np.round(windowMaxX - windowMinX).astype(int)
@@ -62,8 +61,7 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   
   It_window = np.zeros((windowH, windowW))
   It_window = getInterpolatedWindow(It_window, windowMinX, windowMinY, f_It)
-  
-  
+
   
   #Fill in culmination matrices
   LHS_summation[0][0] = np.sum(np.multiply(Ix_window, Ix_window))
@@ -79,8 +77,6 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   u, v = LHS_inverse.dot(RHS_summation)
   newX = startX + u
   newY = startY + v
-  print(u, v)
-  
   return newX, newY
 
 def getInterpolatedWindow(gradWindow, windowMinX, windowMinY, f):
