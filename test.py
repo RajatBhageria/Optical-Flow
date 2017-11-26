@@ -15,10 +15,10 @@ import matplotlib.pyplot as plt
 import cv2
 
 #create all the images
-color_img1 = plt.imread('./data/medium/StrangerThings0.jpg')
+color_img1 = plt.imread('./data/easy/TheMartian0.jpg')
 img1 = rgb2gray(color_img1)
 
-color_img2 = plt.imread('./data/medium/StrangerThings1.jpg')
+color_img2 = plt.imread('./data/easy/TheMartian1.jpg')
 img2 = rgb2gray(color_img2)
 
 #find the bounding boxes
@@ -26,7 +26,7 @@ bbox = detectFace(color_img1)
 
 #find the positions of all the features
 startXs, startYs = getFeatures(img1, bbox)
-overlay_points(img1, startXs, startYs, 'postGetFeatures_TheMartian1')
+#overlay_points(img1, startXs, startYs, 'postGetFeatures_TheMartian1')
 
 #draw the bounding boxes
 first = bbox[0,0,:]
@@ -39,6 +39,6 @@ newXs, newYs = estimateAllTranslation(startXs, startYs, color_img1, color_img2)
 
 Xs, Ys, newbbox = applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox)
 
-overlay_points(img2, Xs, Ys, 'postApplyGeomTransform_TheMartian2')
+#overlay_points(img2, Xs, Ys, 'postApplyGeomTransform_TheMartian2')
 
 

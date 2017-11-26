@@ -33,13 +33,11 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   
   # Get partial with respect to time
   It = gray2 - gray1
-  
   x = np.arange(0, w)
   y = np.arange(0, h)
-  xx, yy = np.meshgrid(x, y)
-  f_Ix = interp2d(xx, yy, Ix)
-  f_Iy = interp2d(xx, yy, Iy)
-  f_It = interp2d(xx, yy, It)
+  f_Ix = interp2d(x, y, Ix)
+  f_Iy = interp2d(x, y, Iy)
+  f_It = interp2d(x, y, It)
   
   
   # Calculate boundaries of window (normally 10x10 except when on boundary)
@@ -50,8 +48,8 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   windowMinY = startY - 24 if startY - 25 > 0 else startY
   windowMaxY = startY + 24 if startY + 25 < h else h - startY
   
-  windowH = round(windowMaxY - windowMinY)
-  windowW = round(windowMaxX - windowMinX)
+  windowH = np.round(windowMaxY - windowMinY).astype(int)
+  windowW = np.round(windowMaxX - windowMinX).astype(int)
   # Get window points from Ix, Iy, and It
   #Ix_window = Ix[windowMinY: windowMaxY, windowMinX: windowMaxX]
   #Iy_window = Iy[windowMinY: windowMaxY, windowMinX: windowMaxX]
@@ -86,7 +84,7 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
 
 def getInterpolatedWindow(gradWindow, windowMinX, windowMinY, f):
     h, w = gradWindow.shape
-    for j in range(len(h)):
-        for i in range(len(w)):
+    for j in range(h):
+        for i in range(w):
             gradWindow[j][i] = f(windowMinX + i, windowMinY + j)
     return gradWindow
