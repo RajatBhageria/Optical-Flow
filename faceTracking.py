@@ -69,7 +69,7 @@ def faceTracking(rawVideo):
     startXs, startYs = getFeatures(init_img_gray, face)
 
     #initialize the the output matrix of tracked images
-    outputMatrix = np.zeros((num_frames-f,frame_height,frame_width, 3))
+    outputMatrix = np.zeros((num_frames-f,frame_height,frame_width, 3), np.uint8)
 
     #draw rectangles of all the faces on the current image
     initImgWithBBox = init_img
@@ -125,7 +125,7 @@ def faceTracking(rawVideo):
                 img2WithBoundingBox = plotPoints(img2WithBoundingBox, Ys[:, facei], Xs[:, facei])
             
         #add img2 to the output matrix
-        outputMatrix[frame,:,:,:] = img2WithBoundingBox
+        outputMatrix[frame+1,:,:,:] = img2WithBoundingBox
         #set the new bbox to the face for the next iteration
         face = newbbox
 
