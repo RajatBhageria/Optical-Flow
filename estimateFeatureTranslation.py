@@ -60,7 +60,7 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   Iy_window = np.zeros((windowH, windowW))
   Iy_window = getInterpolatedWindow(Iy_window, windowMinX, windowMinY, f_Iy)
   
-  It_window = np.zerons((windowH, windowW))
+  It_window = np.zeros((windowH, windowW))
   It_window = getInterpolatedWindow(It_window, windowMinX, windowMinY, f_It)
   
   
