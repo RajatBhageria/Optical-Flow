@@ -74,6 +74,15 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
     #add to newbbox
     newbbox[face,:,:] = currentNewBbox
 
+    #HERE we need to modify Xs and Ys based on the newbbox that we just found
+    #need to do
+    #Xs = Xs[Xs > xstart and Xs < xend]
+    #Ys = Ys[Xs > xstart and Xs < xend]
+    #Xs = Xs[Ys > ystart and Ys < yend]
+    #Ys = Ys[Ys > ystart and Ys < yend]
+    #all 4 of these need to be done in order to delete Xs and Ys that are out of bounds, but I wasnt
+    #sure how to access the start and end boundaries from bbox nor how to index into Xs and Ys if there are multiple faces
+
     #add the new Xs and Ys to final Xs and Ys
     #only once face or the first face
     if (len(Xs) ==0):
