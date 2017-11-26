@@ -34,18 +34,38 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   # Get partial with respect to time
   It = gray2 - gray1
   
-  # Calculate boundaries of window (normally 10x10 except when on boundary)
-  startXWin = np.round(startX).astype(int)
-  startYWin = np.round(startY).astype(int)
-  windowMinX = startXWin - 24 if startXWin - 24 > 0 else startXWin
-  windowMaxX = startXWin + 25 if startXWin + 25 < w else w - startXWin
-  windowMinY = startYWin - 24 if startYWin - 25 > 0 else startYWin
-  windowMaxY = startYWin + 24 if startYWin + 25 < h else h - startYWin
+  x = np.arange(0, w)
+  y = np.arange(0, h)
+  xx, yy = np.meshgrid(x, y)
+  f_Ix = interp2d(xx, yy, Ix)
+  f_Iy = interp2d(xx, yy, Iy)
+  f_It = interp2d(xx, yy, It)
   
+  
+  # Calculate boundaries of window (normally 10x10 except when on boundary)
+  #startXWin = np.round(startX).astype(int)
+  #startYWin = np.round(startY).astype(int)
+  windowMinX = startX - 24 if startX - 24 > 0 else startX
+  windowMaxX = startX + 25 if startX + 25 < w else w - startX
+  windowMinY = startY - 24 if startY - 25 > 0 else startY
+  windowMaxY = startY + 24 if startY + 25 < h else h - startY
+  
+  windowH = round(windowMaxY - windowMinY)
+  windowW = round(windowMaxX - windowMinX)
   # Get window points from Ix, Iy, and It
-  Ix_window = Ix[windowMinY: windowMaxY, windowMinX: windowMaxX]
-  Iy_window = Iy[windowMinY: windowMaxY, windowMinX: windowMaxX]
-  It_window = It[windowMinY: windowMaxY, windowMinX: windowMaxX]
+  #Ix_window = Ix[windowMinY: windowMaxY, windowMinX: windowMaxX]
+  #Iy_window = Iy[windowMinY: windowMaxY, windowMinX: windowMaxX]
+  #It_window = It[windowMinY: windowMaxY, windowMinX: windowMaxX]
+  Ix_window = np.zeros((windowH, windowW))
+  Ix_window = getInterpolatedWindow(Ix_window, windowMinX, windowMinY, f_Ix)
+  
+  Iy_window = np.zeros((windowH, windowW))
+  Iy_window = getInterpolatedWindow(Iy_window, windowMinX, windowMinY, f_Iy)
+  
+  It_window = np.zerons((windowH, windowW))
+  It_window = getInterpolatedWindow(It_window, windowMinX, windowMinY, f_It)
+  
+  
   
   #Fill in culmination matrices
   LHS_summation[0][0] = np.sum(np.multiply(Ix_window, Ix_window))
@@ -63,3 +83,10 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
   newY = startY + v
   
   return newX, newY
+
+def getInterpolatedWindow(gradWindow, windowMinX, windowMinY, f):
+    h, w = gradWindow.shape
+    for j in range(len(h)):
+        for i in range(len(w)):
+            gradWindow[j][i] = f(windowMinX + i, windowMinY + j)
+    return gradWindow
